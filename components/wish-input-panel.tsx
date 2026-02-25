@@ -132,7 +132,7 @@ export function WishInputPanel({ isOpen, locale, messages, onClose, onSubmitted 
         <button
           type="button"
           onClick={onClose}
-          className="focusable absolute right-3 top-3 rounded-full border border-white/45 px-2 text-xs text-white/90"
+          className="focusable absolute right-3 top-3 rounded-full border border-white/85 bg-black/25 px-2.5 py-0.5 text-sm font-semibold leading-none text-white shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition hover:bg-black/35"
           aria-label="Close wish form"
         >
           ×

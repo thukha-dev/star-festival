@@ -56,17 +56,19 @@ export function WishModal({ wish, messages, onClose }: WishModalProps) {
         <span className="pointer-events-none absolute right-5 top-6 h-4 w-7 rotate-[48deg] rounded-full bg-gradient-to-r from-green-200/70 to-green-500/10" />
         <span className="pointer-events-none absolute inset-0 rounded-2xl bg-[linear-gradient(180deg,rgba(255,255,255,0.16),transparent_26%)]" />
 
+        <button
+          type="button"
+          onClick={onClose}
+          className="focusable absolute right-3 top-3 rounded-full border border-white/85 bg-black/25 px-2.5 py-0.5 text-sm font-semibold leading-none text-white shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition hover:bg-black/35"
+          aria-label="Close wish card"
+        >
+          ×
+        </button>
+
         <p className="text-xs text-white/80">{messages.modal.by}</p>
         <h3 className="mt-1 text-lg font-semibold text-white">{wish.nickname}</h3>
         <p className="mt-1 text-xs text-white/85">Wished Year: {year}</p>
         <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-white/95">{wish.wishText}</p>
-        <button
-          type="button"
-          onClick={onClose}
-          className="focusable mt-5 rounded-lg border border-white/40 bg-white/15 px-3 py-1 text-sm text-white transition hover:bg-white/25"
-        >
-          {messages.modal.close}
-        </button>
       </motion.div>
     </div>
   );

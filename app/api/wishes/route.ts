@@ -78,6 +78,7 @@ export async function GET(request: Request) {
   const rawLimit = Number(url.searchParams.get("limit") || DEFAULT_LIMIT);
   const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(rawLimit, 1), MAX_LIMIT) : DEFAULT_LIMIT;
   const before = url.searchParams.get("before");
+  const includeCount = url.searchParams.get("includeCount") === "1";
 
   const urlKey = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const publicKey =
@@ -91,18 +92,25 @@ export async function GET(request: Request) {
   }
 
   const client = createClient(urlKey, publicKey);
-  let query = client
-    .from("wishes")
-    .select("id, wish_text, nickname, nickname_is_default, color, language, status, created_at")
-    .eq("status", "approved")
-    .order("created_at", { ascending: false })
-    .limit(limit);
+  let query = includeCount
+    ? client
+        .from("wishes")
+        .select("id, wish_text, nickname, nickname_is_default, color, language, status, created_at", { count: "exact" })
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(limit)
+    : client
+        .from("wishes")
+        .select("id, wish_text, nickname, nickname_is_default, color, language, status, created_at")
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(limit);
 
   if (before) {
     query = query.lt("created_at", before);
   }
 
-  const { data, error } = await query;
+  const { data, error, count } = await query;
 
   if (error || !data) {
     return NextResponse.json(
@@ -117,5 +125,9 @@ export async function GET(request: Request) {
   const wishes = (data as WishRow[]).map(mapWishRow);
   const nextCursor = wishes.length ? wishes[wishes.length - 1]?.createdAt ?? null : null;
 
-  return NextResponse.json({ wishes, nextCursor });
+  return NextResponse.json({
+    wishes,
+    nextCursor,
+    totalCount: includeCount ? count ?? wishes.length : undefined
+  });
 }

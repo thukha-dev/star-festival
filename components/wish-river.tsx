@@ -20,9 +20,10 @@ type WishRiverProps = {
   onLoadMore: () => void;
   hasMore: boolean;
   isLoadingMore: boolean;
+  totalCount?: number;
 };
 
-export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore, isLoadingMore }: WishRiverProps) {
+export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore, isLoadingMore, totalCount }: WishRiverProps) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   const getRowSpan = (wishText: string) => {
@@ -70,7 +71,9 @@ export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore,
 
         <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/85">{messages.common.allWishes}</h2>
-          <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/75">{wishes.length}</span>
+          <span className="rounded-full border border-blue-100/90 bg-[#4f86f7] px-4 py-1.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(79,134,247,0.5)]">
+            {totalCount ?? wishes.length}
+          </span>
         </div>
 
         <div
@@ -104,15 +107,11 @@ export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore,
                   {wish.wishText}
                 </p>
                 <p className="mt-auto w-full truncate pt-3 text-left text-xs text-white/90">{wish.nickname}</p>
-                <p className="w-full text-left text-[10px] text-white/80">
-                  {new Date(wish.createdAt).getFullYear()}
-                </p>
+                <p className="w-full text-left text-[10px] text-white/80">{new Date(wish.createdAt).getFullYear()}</p>
               </motion.button>
             ))}
           </div>
-          {isLoadingMore ? (
-            <div className="mt-3 pb-2 text-center text-xs text-white/75">Loading more wishes...</div>
-          ) : null}
+          {isLoadingMore ? <div className="mt-3 pb-2 text-center text-xs text-white/75">Loading more wishes...</div> : null}
         </div>
       </div>
     </section>

@@ -15,6 +15,7 @@ import type { Wish } from "@/lib/types";
 type WishesResponse = {
   wishes: Wish[];
   nextCursor: string | null;
+  totalCount?: number;
 };
 
 const introScriptByLocale = {
@@ -108,8 +109,11 @@ function IntroTanzakuModal({
 
         <button
           type="button"
-          onClick={onClose}
-          className="focusable absolute right-3 top-3 rounded-full border border-white/45 px-2 text-xs text-white/95"
+          onClick={(event) => {
+            event.stopPropagation();
+            onClose();
+          }}
+          className="focusable absolute right-3 top-3 z-20 rounded-full border border-white/85 bg-black/25 px-2.5 py-0.5 text-sm font-semibold leading-none text-white shadow-[0_4px_12px_rgba(0,0,0,0.35)] transition hover:bg-black/35"
           aria-label="Close intro"
         >
           ×
@@ -198,6 +202,7 @@ export function HeroSection() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const [selectedWish, setSelectedWish] = useState<Wish | null>(null);
   const [isWishFormOpen, setIsWishFormOpen] = useState(false);
   const [isIntroOpen, setIsIntroOpen] = useState(false);
@@ -210,16 +215,18 @@ export function HeroSection() {
   const fetchLatestWishes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/wishes?limit=50", { cache: "no-store" });
+      const response = await fetch("/api/wishes?limit=50&includeCount=1", { cache: "no-store" });
       if (!response.ok) {
         setWishes([]);
         setNextCursor(null);
+        setTotalCount(0);
         return;
       }
 
       const payload = (await response.json()) as WishesResponse;
       setWishes(payload.wishes);
       setNextCursor(payload.nextCursor);
+      setTotalCount(payload.totalCount ?? payload.wishes.length);
     } finally {
       setIsLoading(false);
     }
@@ -242,6 +249,9 @@ export function HeroSection() {
       const payload = (await response.json()) as WishesResponse;
       setWishes((prev) => [...prev, ...payload.wishes]);
       setNextCursor(payload.nextCursor);
+      if (typeof payload.totalCount === "number") {
+        setTotalCount(payload.totalCount);
+      }
     } finally {
       setIsLoadingMore(false);
     }
@@ -315,14 +325,14 @@ export function HeroSection() {
               <button
                 type="button"
                 onClick={onPrimaryCta}
-                className="focusable rounded-full bg-cyan-300/25 px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-cyan-300/35"
+                className="focusable rounded-full border border-cyan-100/85 bg-cyan-300/45 px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_12px_28px_rgba(88,197,255,0.45)] transition hover:-translate-y-0.5 hover:bg-cyan-200/70 hover:shadow-[0_16px_34px_rgba(88,197,255,0.55)]"
               >
                 {messages.hero.primaryCta}
               </button>
               <button
                 type="button"
                 onClick={onSecondaryCta}
-                className="focusable rounded-full border border-white/35 px-5 py-2 text-sm text-white/90 transition hover:bg-white/10"
+                className="focusable rounded-full border border-violet-200/80 bg-violet-400/45 px-6 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(146,97,217,0.45)] transition hover:-translate-y-0.5 hover:bg-violet-300/60 hover:shadow-[0_16px_34px_rgba(146,97,217,0.55)]"
               >
                 {messages.hero.secondaryCta}
               </button>
@@ -352,6 +362,7 @@ export function HeroSection() {
         onLoadMore={loadMoreWishes}
         hasMore={Boolean(nextCursor)}
         isLoadingMore={isLoadingMore}
+        totalCount={totalCount}
       />
 
       {isLoading ? <LoadingTanzaku /> : null}
