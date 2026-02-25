@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Star Festival favicon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e1f4a" />
+      <stop offset="100%" stop-color="#1a2f73" />
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5aa6ff" />
+      <stop offset="100%" stop-color="#3f7fe8" />
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="116" height="116" rx="28" fill="url(#bg)" />
+  <path d="M64 22v16" stroke="#e6f1ff" stroke-width="4" stroke-linecap="round" />
+  <rect x="46" y="36" width="36" height="64" rx="8" fill="url(#paper)" />
+  <path d="M54 52h20M54 62h20M54 72h14" stroke="#d8ecff" stroke-width="3" stroke-linecap="round" />
+  <path d="M18 44c10 0 16-8 24-8M110 82c-10 0-16 8-24 8" stroke="#7be39e" stroke-width="5" stroke-linecap="round" />
+  <path d="M96 24l2.8 5.8 6.2.9-4.5 4.4 1 6.2-5.5-2.9-5.5 2.9 1-6.2-4.5-4.4 6.2-.9z" fill="#ffe07a" />
+</svg>
