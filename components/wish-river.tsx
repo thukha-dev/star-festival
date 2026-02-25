@@ -26,16 +26,6 @@ type WishRiverProps = {
 export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore, isLoadingMore, totalCount }: WishRiverProps) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  const getRowSpan = (wishText: string) => {
-    if (wishText.length > 110) {
-      return 3;
-    }
-    if (wishText.length > 55) {
-      return 2;
-    }
-    return 1;
-  };
-
   const handleHorizontalScroll = () => {
     if (!hasMore || isLoadingMore) {
       return;
@@ -79,8 +69,17 @@ export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore,
         <div
           ref={scrollerRef}
           onScroll={handleHorizontalScroll}
-          className="h-[58vh] overflow-x-auto overflow-y-hidden pb-2 sm:h-[64vh] md:h-[80vh]"
+          className="relative h-[58vh] overflow-x-auto overflow-y-hidden pb-2 sm:h-[64vh] md:h-[80vh]"
         >
+          <motion.div
+            className="pointer-events-none absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-2xl border border-white/45 bg-black/30 px-3 py-2 text-white shadow-[0_10px_24px_rgba(8,12,28,0.55)]"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 1.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85">Scroll</p>
+            <p className="text-lg font-semibold leading-none">→</p>
+          </motion.div>
+
           <div className="grid h-full min-w-max auto-cols-[9rem] grid-flow-col grid-rows-4 gap-3 sm:auto-cols-[10rem] sm:gap-4 md:auto-cols-[12rem] md:grid-rows-6">
             {wishes.map((wish, index) => (
               <motion.button
@@ -89,7 +88,6 @@ export function WishRiver({ wishes, messages, onSelectWish, onLoadMore, hasMore,
                 onClick={() => onSelectWish(wish)}
                 className="focusable group relative flex min-h-[132px] flex-col rounded-lg p-3 text-white transition hover:-translate-y-0.5"
                 style={{
-                  gridRow: `span ${getRowSpan(wish.wishText)} / span ${getRowSpan(wish.wishText)}`,
                   backgroundColor: cardColors[wish.color],
                   boxShadow: "0 10px 24px rgba(8, 12, 28, 0.4)"
                 }}
