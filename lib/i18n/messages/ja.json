@@ -1,0 +1,33 @@
+{
+  "hero": {
+    "titleJp": "星祭り",
+    "titleEn": "Star Festival",
+    "subtitle": "夏の夜に願いを託し、星々へそっと届けましょう。",
+    "primaryCta": "願いを書く",
+    "secondaryCta": "イントロを見る"
+  },
+  "wishForm": {
+    "title": "短冊を飾る",
+    "wishLabel": "願いごと",
+    "wishPlaceholder": "願いごとを入力してください（120文字以内）",
+    "nicknameLabel": "ニックネーム（任意）",
+    "nicknamePlaceholder": "匿名",
+    "submit": "願いを飾る",
+    "colorLabel": "短冊の色"
+  },
+  "modal": {
+    "close": "閉じる",
+    "by": "投稿"
+  },
+  "validation": {
+    "required": "願いごとを入力してください。",
+    "maxLength": "120文字以内で入力してください。",
+    "moderation": "不適切な表現やスパムに該当する可能性があります。内容を調整してください。",
+    "submitFailed": "現在、願いを飾れませんでした。しばらくしてから再度お試しください。"
+  },
+  "common": {
+    "anonymous": "匿名",
+    "loading": "短冊を読み込み中...",
+    "allWishes": "願いの川"
+  }
+}

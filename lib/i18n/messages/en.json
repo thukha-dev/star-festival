@@ -1,0 +1,33 @@
+{
+  "hero": {
+    "titleJp": "星祭り",
+    "titleEn": "Star Festival",
+    "subtitle": "Whisper your wish into the summer night, and let it drift among the stars.",
+    "primaryCta": "Make a Wish",
+    "secondaryCta": "Start Intro"
+  },
+  "wishForm": {
+    "title": "Hang Your Wish",
+    "wishLabel": "Wish",
+    "wishPlaceholder": "Write your wish (max 120 characters)",
+    "nicknameLabel": "Nickname (optional)",
+    "nicknamePlaceholder": "Anonymous",
+    "submit": "Hang My Wish",
+    "colorLabel": "Card Color"
+  },
+  "modal": {
+    "close": "Close",
+    "by": "by"
+  },
+  "validation": {
+    "required": "Please write your wish.",
+    "maxLength": "Wish must be 120 characters or fewer.",
+    "moderation": "Please revise your wish and avoid restricted words or spam patterns.",
+    "submitFailed": "We could not hang your wish right now. Please try again."
+  },
+  "common": {
+    "anonymous": "Anonymous",
+    "loading": "Loading wishes...",
+    "allWishes": "Wish River"
+  }
+}
